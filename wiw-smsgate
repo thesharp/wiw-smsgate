@@ -7,11 +7,8 @@ from platform import node
 import ConfigParser
 import logging
 import sys
+import os
 
-
-# Configuration file handling
-config = ConfigParser.ConfigParser()
-config.readfp(open("/etc/wiw-smsgate.conf"))
 
 # Command line arguments handling
 usage = "Usage: %prog [options] <phone number> <message>"
@@ -19,7 +16,19 @@ parser = OptionParser(usage=usage, epilog="<phone number> should be in a "
                       "7xxxxxxxxxx format")
 parser.add_option("-v", "--verbose", action="store_true", dest="verbose",
                   default=False, help="verbose output")
+parser.add_option("-t", "--test", action="store_true", dest="test",
+                  default=False, help="test mode for nosetests")
 (options, args) = parser.parse_args()
+
+
+# Configuration file handling
+config = ConfigParser.ConfigParser()
+if not options.test:
+    config.readfp(open("/etc/wiw-smsgate.conf"))
+else:
+    config.readfp(open("%s/etc/wiw-smsgate.conf" %
+                  os.environ.get("VIRTUAL_ENV")))
+
 
 # Logging
 logger = logging.getLogger("wiw-smsgate")

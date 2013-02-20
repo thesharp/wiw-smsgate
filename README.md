@@ -15,5 +15,6 @@ This is our in-house utility to send text messages (SMS) from Nagios using our o
     Options:
       -h, --help     show this help message and exit
       -v, --verbose  verbose output
+      -t, --test     test mode for nosetests
 
     <phone number> should be in a 7xxxxxxxxxx format

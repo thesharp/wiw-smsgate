@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="wiw-smsgate",
-    version="0.2",
+    version="0.3",
     scripts=["wiw-smsgate"],
     data_files=[("etc", ["wiw-smsgate.conf"])],
     # install_requires=[""],

@@ -13,8 +13,10 @@ This is our in-house utility to send text messages (SMS) from Nagios using our o
     Usage: wiw-smsgate [options] <phone number> <message>
 
     Options:
-      -h, --help     show this help message and exit
-      -v, --verbose  verbose output
-      -t, --test     test mode for nosetests
+      -h, --help            show this help message and exit
+      -v, --verbose         verbose output
+      -c CONFIG, --config=CONFIG
+                            configuration file location (default: /etc/wiw-
+                            smsgate.conf)
 
     <phone number> should be in a 7xxxxxxxxxx format

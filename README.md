@@ -1,4 +1,4 @@
-# wiw-smsgate
+# wiw-smsgate [![Build Status](https://secure.travis-ci.org/thesharp/wiw-smsgate.png)](http://travis-ci.org/thesharp/wiw-smsgate)
 
 ## Overview
 

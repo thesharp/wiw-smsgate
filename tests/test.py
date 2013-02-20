@@ -4,9 +4,7 @@ import subprocess
 
 class RunTest(unittest.TestCase):
     def test_import(self):
-        proc = subprocess.Popen("./wiw-smsgate --help", shell=True,
-                                stdout=subprocess.PIPE)
-        test = proc.communicate()[0]
+        subprocess.check_call("wiw-smsgate --help", shell=True)
 
 if __name__ == '__main__':
     unittest.main()

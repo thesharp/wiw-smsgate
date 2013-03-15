@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
-from xmlrpclib import ServerProxy
+from smsgate import SMSGate, SMSSendError
 from optparse import OptionParser
 from logging import handlers
 from platform import node
 import ConfigParser
 import logging
 import sys
-
 
 # Command line arguments handling
 usage = "Usage: %prog [options] <phone number> <message>"
@@ -49,19 +48,8 @@ formatter = logging.Formatter("%(asctime)s %(name)s: %(levelname)s "
 fh.setFormatter(formatter)
 logger.addHandler(fh)
 
-
 gate = config.get("sms", "gate")
-sms = ServerProxy(gate)
-
-
-def send_sms(phone, message):
-    result = sms.sms.send(phone, message)
-    if result == "1":
-        logger.error("Error while sending message \"%s\" to %s" %
-                     (message, phone))
-        sys.exit(1)
-    else:
-        logger.info("Message \"%s\" was sent to %s" % (message, phone))
+sms = SMSGate(gate)
 
 
 def main():
@@ -70,7 +58,14 @@ def main():
     hostname = node().split(".")[0]
     phone = args[0]
     message = " ".join(args[1:]) + " [%s]" % hostname
-    send_sms(phone, message)
+    try:
+        sms.send(phone, message)
+    except SMSSendError:
+        logger.error("Error while sending message \"%s\" to %s" %
+                     (message, phone))
+
+        sys.exit(1)
+    logger.info("Message \"%s\" was sent to %s" % (message, phone))
 
 if __name__ == '__main__':
     main()

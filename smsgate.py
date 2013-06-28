@@ -1,4 +1,6 @@
-from xmlrpclib import ServerProxy
+import urllib2
+import json
+from urllib import urlencode
 
 
 class SMSSendError(Exception):
@@ -11,9 +13,12 @@ class SMSGate(object):
     """ Docstring! """
     def __init__(self, endpoint):
         self.endpoint = endpoint
-        self.gate = ServerProxy(self.endpoint)
 
     def send(self, phone, message):
-        result = self.gate.sms.send(phone, message)
-        if result == "1":
+        params = {"phone": phone, "message": message}
+        url = "%s?%s" % (self.endpoint, urlencode(params))
+        opener = urllib2.urlopen(url)
+        request = opener.read()
+        result = json.loads(request)
+        if result["status"] is False:
             raise SMSSendError

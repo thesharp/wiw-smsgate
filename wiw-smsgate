@@ -20,6 +20,8 @@ parser.add_option("-c", "--config", dest="config",
                        "(default: /etc/wiw-smsgate.conf)")
 (options, args) = parser.parse_args()
 
+if len(args) == 0:
+    sys.exit("No arguments specified. See --help.")
 
 # Configuration file handling
 config = ConfigParser.ConfigParser()

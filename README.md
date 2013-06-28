@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is our in-house utility to send text messages (SMS) from Nagios using our own XML-RPC gateway. This project is here just because I was too lazy to setup an internal git repository. Obviously, this utility is only usable for us, sorry for that.
+This is our in-house utility to send text messages (SMS) from Nagios using our own strange gateway. This project is here just because I was too lazy to setup an internal git repository. Obviously, this utility is only usable for us, sorry for that.
 
 ## Dependencies
 

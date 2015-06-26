@@ -18,6 +18,8 @@ parser.add_option("-c", "--config", dest="config",
                   default="/etc/wiw-smsgate.conf",
                   help="configuration file location "
                        "(default: /etc/wiw-smsgate.conf)")
+parser.add_option("-t", "--telegram", action="store_true", dest="telegram",
+                  default=False, help="send via Telegram")
 (options, args) = parser.parse_args()
 
 if len(args) == 0:
@@ -61,7 +63,10 @@ def main():
     phone = args[0]
     message = " ".join(args[1:]) + " [%s]" % hostname
     try:
-        sms.send(phone, message)
+        if options.telegram:
+            sms.send(phone, message, options.telegram)
+        else:
+            sms.send(phone, message)
     except SMSSendError:
         logger.error("Error while sending message \"%s\" to %s" %
                      (message, phone))

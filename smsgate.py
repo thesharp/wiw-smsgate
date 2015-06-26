@@ -14,8 +14,10 @@ class SMSGate(object):
     def __init__(self, endpoint):
         self.endpoint = endpoint
 
-    def send(self, phone, message):
+    def send(self, phone, message, telegram=False):
         params = {"phone": phone, "message": message}
+        if telegram:
+            params["telegram"] = True
         url = "%s?%s" % (self.endpoint, urlencode(params))
         opener = urllib2.urlopen(url)
         request = opener.read()

@@ -1,12 +1,11 @@
 import urllib2
 import json
-from urllib import urlencode
 
 
 class SMSSendError(Exception):
 
     def __str__(self):
-        return "Error sending SMS"
+        return "Error sending message"
 
 
 class SMSGate(object):
@@ -18,9 +17,7 @@ class SMSGate(object):
         params = {"phone": phone, "message": message}
         if telegram:
             params["telegram"] = True
-        url = "%s?%s" % (self.endpoint, urlencode(params))
-        opener = urllib2.urlopen(url)
-        request = opener.read()
-        result = json.loads(request)
-        if result["status"] is False:
+        request = urllib2.Request(self.endpoint)
+        result = json.loads(urllib2.urlopen(request, json.dumps(params)).read())
+        if result["error"]:
             raise SMSSendError

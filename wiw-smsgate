@@ -68,11 +68,17 @@ def main():
         else:
             sms.send(phone, message)
     except SMSSendError:
-        logger.error("Error while sending message \"%s\" to %s" %
-                     (message, phone))
-
+        if options.telegram:
+            logger.error("Error while sending message \"%s\" to %s via Telegram" %
+                         (message, phone))
+        else:
+            logger.error("Error while sending message \"%s\" to %s via SMS" %
+                         (message, phone))
         sys.exit(1)
-    logger.info("Message \"%s\" was sent to %s" % (message, phone))
+    if options.telegram:
+        logger.info("Message \"%s\" was sent to %s via Telegram" % (message, phone))
+    else:
+        logger.info("Message \"%s\" was sent to %s via SMS" % (message, phone))
 
 if __name__ == '__main__':
     main()
